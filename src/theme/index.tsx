@@ -8,10 +8,10 @@ const theme: Theme = createTheme({
       main: "#33ff33",
       dark: "#00ff00",
       light: "#66ff66",
-      lighter: "#99ff99",
+      lighter: "#ccffcc",
     },
     secondary: {
-      main: "#ffff33",
+      main: "#ffff19",
       dark: "#ffff00",
       light: "#ffff66",
       lighter: "#ffff99",
@@ -22,6 +22,9 @@ const theme: Theme = createTheme({
       "300": "#c4c4b8",
       "400": "#b1b1a1",
       "500": "#9d9d89",
+    },
+    background: {
+      default: "#f7fafc",
     },
   },
   typography: {
@@ -51,7 +54,6 @@ const theme: Theme = createTheme({
         root: {
           padding: "8px 24px",
           border: "none",
-          color: "#fff",
           fontWeight: 600,
           borderRadius: "5px",
           textTransform: "capitalize",
@@ -60,12 +62,42 @@ const theme: Theme = createTheme({
             boxShadow: "none",
           },
         },
+        contained: {
+          background: "#33ff33",
+          color: "#fff",
+        },
+        outlined: {
+          transition: ".6s",
+          background: "transparent",
+          border: "1px solid #33ff33",
+          "&:hover": {
+            background: "#33ff33",
+            color: "#fff",
+          },
+        },
+        text: {
+          background: "#ccffcc",
+          color: "#00ff00",
+          "&:hover": {
+            background: "#ccffcc",
+          },
+        },
+      },
+    },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          fontSize: "12px",
+        },
       },
     },
     MuiOutlinedInput: {
       styleOverrides: {
+        input: {
+          padding: "0",
+        },
         root: {
-          height: "40px",
+          padding: "10px",
           borderRadius: "5px",
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
             borderWidth: "1px",
