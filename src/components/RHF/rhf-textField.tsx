@@ -25,7 +25,7 @@ function RHFTextField(props: any): JSX.Element {
       <InputAdornment position="end">
         <IconButton
           size="small"
-          aria-label="Toogle Password"
+          aria-label="Toggle Password"
           onClick={() => setShowPassword(!showPassword)}
         >
           {showPassword ? <IoEyeOutline /> : <IoEyeOffOutline />}

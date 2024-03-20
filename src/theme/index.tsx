@@ -1,20 +1,33 @@
 "use client";
 import { createTheme } from "@mui/material";
-import type { Theme } from "@mui/material";
 
-const theme: Theme = createTheme({
+declare module "@mui/material/styles" {
+  interface PaletteColor {
+    lightest?: string;
+  }
+
+  interface SimplePaletteColorOptions {
+    lightest?: string;
+  }
+}
+
+const theme = createTheme({
   palette: {
+    common: {
+      black: "#000",
+      white: "#fff",
+    },
     primary: {
       main: "#33ff33",
       dark: "#00ff00",
       light: "#66ff66",
-      lighter: "#ccffcc",
+      lightest: "#ccffcc",
     },
     secondary: {
       main: "#ffff19",
       dark: "#ffff00",
       light: "#ffff66",
-      lighter: "#ffff99",
+      lightest: "#ffff99",
     },
     grey: {
       "100": "#ebebe7",
@@ -62,19 +75,19 @@ const theme: Theme = createTheme({
             boxShadow: "none",
           },
         },
-        contained: {
-          background: "#33ff33",
-          color: "#fff",
-        },
-        outlined: {
+        contained: ({ theme }) => ({
+          background: theme.palette.primary.main,
+          color: theme.palette.common.white,
+        }),
+        outlined: ({ theme }) => ({
           transition: ".6s",
           background: "transparent",
           border: "1px solid #33ff33",
           "&:hover": {
-            background: "#33ff33",
-            color: "#fff",
+            background: theme.palette.primary.main,
+            color: theme.palette.common.white,
           },
-        },
+        }),
         text: {
           background: "#ccffcc",
           color: "#00ff00",

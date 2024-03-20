@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import FormProvider from "@/components/RHF/form-provider";
 import RHFTextField from "@/components/RHF/rhf-textField";
-import { Box, MenuItem } from "@mui/material";
+import { Box, MenuItem, Slider, Tab, Tabs } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import RHFSelect from "@/components/RHF/rhf-select";
 import RHFCheckbox from "@/components/RHF/rhf-checkbox";
@@ -13,6 +13,7 @@ import RHFMultiSelect from "@/components/RHF/rhf-multi-select";
 import RHFDatePicker from "@/components/RHF/rhf-date-picker";
 import RHFTimePicker from "@/components/RHF/rhf-time-picker";
 import CustomButton from "@/components/custom-button";
+import { useState } from "react";
 
 const options = [
   { label: "Male", value: "male" },
@@ -29,6 +30,7 @@ const categories = [
 ];
 
 function HomeSection() {
+  const [tabValue, setTabValue] = useState(0);
   const methods = useForm({
     defaultValues: {
       password: "",
@@ -59,8 +61,12 @@ function HomeSection() {
     console.log(values);
   };
 
+  const handleTabChange = (e: any, index: string) => {
+    console.log(index);
+  };
+
   return (
-    <Box p={2}>
+    <Box p={2} sx={styles.root}>
       <h5>Home</h5>
       <br />
       <FormProvider methods={methods} onSubmit={handleSubmit(handleForm)}>
@@ -76,7 +82,7 @@ function HomeSection() {
         <RHFSelect name="city" fullWidth={false} outerLabel="City">
           <MenuItem value="lahore">Lahore</MenuItem>
           <MenuItem value="gujranwala">Gujranwala</MenuItem>
-          <MenuItem value="faislabad">Faislabad</MenuItem>
+          <MenuItem value="faisalabad">Faisalabad</MenuItem>
         </RHFSelect>
         <br />
         <RHFTextField
@@ -121,8 +127,24 @@ function HomeSection() {
         <br />
         <CustomButton variant="text">Text Button</CustomButton>
       </FormProvider>
+      <Box width={300} my={2}>
+        <Slider
+          className="_slider"
+          defaultValue={50}
+          aria-label="Default"
+          valueLabelDisplay="auto"
+        />
+      </Box>
     </Box>
   );
 }
+
+const styles = {
+  root: {
+    "& .MuiAutocomplete-root": {
+      // background: "red",
+    },
+  },
+};
 
 export default HomeSection;
