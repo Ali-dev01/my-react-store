@@ -2,18 +2,18 @@
 
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
-import FormProvider from "@/components/RHF/form-provider";
-import RHFTextField from "@/components/RHF/rhf-textField";
-import { Box, MenuItem, Slider, Tab, Tabs } from "@mui/material";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { Box, MenuItem, Slider } from "@mui/material";
+
 import RHFSelect from "@/components/RHF/rhf-select";
+import { yupResolver } from "@hookform/resolvers/yup";
+import CustomButton from "@/components/custom-button";
 import RHFCheckbox from "@/components/RHF/rhf-checkbox";
-import RHFRadioGroup from "@/components/RHF/rhf-radio-group";
-import RHFMultiSelect from "@/components/RHF/rhf-multi-select";
+import RHFTextField from "@/components/RHF/rhf-textField";
+import FormProvider from "@/components/RHF/form-provider";
 import RHFDatePicker from "@/components/RHF/rhf-date-picker";
 import RHFTimePicker from "@/components/RHF/rhf-time-picker";
-import CustomButton from "@/components/custom-button";
-import { useState } from "react";
+import RHFRadioGroup from "@/components/RHF/rhf-radio-group";
+import RHFMultiSelect from "@/components/RHF/rhf-multi-select";
 
 const options = [
   { label: "Male", value: "male" },
@@ -30,7 +30,6 @@ const categories = [
 ];
 
 function HomeSection() {
-  const [tabValue, setTabValue] = useState(0);
   const methods = useForm({
     defaultValues: {
       password: "",
@@ -61,12 +60,8 @@ function HomeSection() {
     console.log(values);
   };
 
-  const handleTabChange = (e: any, index: string) => {
-    console.log(index);
-  };
-
   return (
-    <Box p={2} sx={styles.root}>
+    <Box p={2}>
       <h5>Home</h5>
       <br />
       <FormProvider methods={methods} onSubmit={handleSubmit(handleForm)}>
@@ -110,12 +105,7 @@ function HomeSection() {
         <br />
         <RHFDatePicker name="startDate" outerLabel="Start Date" fullWidth={false} />
         <br />
-        <RHFTimePicker
-          name="startTime"
-          outerLabel="Start Time"
-          fullWidth={false}
-          readOnly={false}
-        />
+        <RHFTimePicker name="startTime" outerLabel="Start Time" fullWidth={false} readOnly={false} />
         <br />
         <CustomButton variant="contained" type="submit">
           Submit
@@ -128,23 +118,10 @@ function HomeSection() {
         <CustomButton variant="text">Text Button</CustomButton>
       </FormProvider>
       <Box width={300} my={2}>
-        <Slider
-          className="_slider"
-          defaultValue={50}
-          aria-label="Default"
-          valueLabelDisplay="auto"
-        />
+        <Slider className="_slider" defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
       </Box>
     </Box>
   );
 }
-
-const styles = {
-  root: {
-    "& .MuiAutocomplete-root": {
-      // background: "red",
-    },
-  },
-};
 
 export default HomeSection;

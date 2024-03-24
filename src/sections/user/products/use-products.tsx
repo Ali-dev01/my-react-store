@@ -1,6 +1,5 @@
 import { Box, Checkbox, IconButton } from "@mui/material";
 import { createColumnHelper } from "@tanstack/react-table";
-import { useState } from "react";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 
 type Person = {
@@ -46,44 +45,28 @@ export const defaultData: Person[] = [
     actions: "",
   },
 ];
-const columnHelper = createColumnHelper<Person>();
 
-const useTable = () => {
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
-
-  const handleSelectAll = (e: any) => {
-    if (e.target.checked) {
-      setSelectedIds(defaultData.map((item) => item.id));
-    } else setSelectedIds([]);
+const useProducts = () => {
+  const getSelectedRows = (row: Person[]) => {
+    console.log(row);
   };
-  const handleSelectRow = (e: any, id: string) => {
-    if (e.target.checked) {
-      setSelectedIds([...selectedIds, id]);
-    } else {
-      const filteredId = selectedIds.filter((item) => item !== id);
-      setSelectedIds(filteredId);
-    }
-  };
-  console.log(selectedIds);
 
+  const columnHelper = createColumnHelper<Person>();
   const columns = [
     columnHelper.accessor("id", {
       id: "id",
-      header: () => (
-        <Box display="flex" gap="4px" alignItems="center">
+      header: ({ table }) => (
+        <Box display="flex" alignItems="center" gap="4px">
           <Checkbox
-            checked={selectedIds.length === defaultData.length}
-            onChange={(e) => handleSelectAll(e)}
+            checked={table.getIsAllRowsSelected()}
+            onChange={table.getToggleAllRowsSelectedHandler()}
           />
           <span>ID</span>
         </Box>
       ),
       cell: (info) => (
-        <Box display="flex" gap="4px" alignItems="center">
-          <Checkbox
-            checked={selectedIds.includes(info.row.original.id)}
-            onChange={(e) => handleSelectRow(e, info.row.original.id)}
-          />
+        <Box display="flex" alignItems="center" gap="4px">
+          <Checkbox checked={info.row.getIsSelected()} onChange={info.row.getToggleSelectedHandler()} />
           <span>{info.getValue()}</span>
         </Box>
       ),
@@ -128,7 +111,7 @@ const useTable = () => {
       ),
     }),
   ];
-
-  return { columns, defaultData };
+  return { defaultData, columns, getSelectedRows };
 };
-export default useTable;
+
+export default useProducts;

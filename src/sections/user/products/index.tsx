@@ -3,17 +3,9 @@ import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
-import useTable from "./use-table";
+
+import useProducts from "./use-products";
+import CustomTable from "@/components/custom-table";
 
 export default function BasicTabs({
   children,
@@ -23,15 +15,11 @@ export default function BasicTabs({
   tabsArray: string[];
 }) {
   const tabChildren = React.Children.toArray(children);
+
   const [value, setValue] = React.useState(0);
+  const [currPage, setCurrPage] = React.useState(1);
 
-  const { columns, defaultData: data } = useTable();
-
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
+  const { defaultData: data, columns, getSelectedRows } = useProducts();
 
   const handleChange = (_: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -52,40 +40,20 @@ export default function BasicTabs({
           ))}
         </Tabs>
 
-        {tabChildren?.map(
-          (child, index) => value === index && <Box key={`child${value}`}>{child}</Box>
-        )}
+        {tabChildren?.map((child, index) => value === index && <Box key={`child${value}`}>{child}</Box>)}
       </Box>
 
       <Box mt={2} sx={{ width: { lg: "70%", xs: "100%" } }}>
-        <TableContainer component={Paper} sx={styles.tableStyles}>
-          <Table sx={{ minWidth: 650 }} classes={{ root: "_root" }}>
-            <TableHead>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <TableCell key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))}
-            </TableHead>
-            <TableBody>
-              {table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <CustomTable
+          data={data}
+          columns={columns}
+          getSelectedRows={getSelectedRows}
+          isPagination
+          onPageChange={(page) => setCurrPage(page)}
+          currentPage={currPage}
+          totalPages={10}
+          isLoading={false}
+        />
       </Box>
     </Box>
   );
@@ -104,7 +72,7 @@ const styles = {
         "& .MuiTabs-flexContainer": {
           "& .MuiButtonBase-root": {
             minHeight: "0",
-            padding: "8px 16px",
+            padding: "10px 16px",
           },
           "& .Mui-selected": {
             color: "#fff",
@@ -119,24 +87,4 @@ const styles = {
       },
     },
   }),
-  tableStyles: {
-    boxShadow: "none",
-    borderRadius: "0",
-    "& ._root": {
-      "& .MuiTableHead-root": {
-        "& .MuiTableCell-root": {
-          borderBottom: "none",
-          fontSize: "14px",
-          color: "#667085",
-        },
-      },
-      "& .MuiTableBody-root": {
-        "& .MuiTableCell-root": {
-          borderBottom: "none",
-          fontSize: "16px",
-          color: "#101828",
-        },
-      },
-    },
-  },
 };

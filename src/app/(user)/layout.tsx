@@ -5,6 +5,7 @@ import { ThemeProvider } from "@mui/material";
 import "../../app/globals.css";
 import theme from "@/theme";
 import { ReactNode } from "react";
+import Header from "@/components/layout/header";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
@@ -22,7 +23,9 @@ export default function UserLayout({ children }: Readonly<PropsTypes>) {
     <html lang="en">
       <ThemeProvider theme={theme}>
         <body className={poppins.className}>
-          <header>Header</header>
+          <header>
+            <Header />
+          </header>
           {children}
           <footer>Footer</footer>
         </body>

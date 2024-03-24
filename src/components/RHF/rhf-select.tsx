@@ -38,8 +38,8 @@ function RHFSelect(props: any): JSX.Element {
               }}
               {...others}
             >
-              <MenuItem disabled value="">
-                Select Option
+              <MenuItem disabled value=" ">
+                {placeholder}
               </MenuItem>
               {children}
             </TextField>

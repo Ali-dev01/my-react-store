@@ -30,11 +30,15 @@ const theme = createTheme({
       lightest: "#ffff99",
     },
     grey: {
-      "100": "#ebebe7",
-      "200": "#d8d8d0",
-      "300": "#c4c4b8",
-      "400": "#b1b1a1",
-      "500": "#9d9d89",
+      "100": "#f7f7f5",
+      "200": "#f5f5f3",
+      "300": "#f1f1ee",
+      "400": "#edede9",
+      "500": "#ebebe7",
+      "600": "#d3d3cf",
+      "700": "#757573",
+      "800": "#5e5e5c",
+      "900": "#464645",
     },
     background: {
       default: "#f7fafc",
@@ -47,18 +51,23 @@ const theme = createTheme({
     h1: {
       color: "#2B3445",
       fontSize: "50px",
+      lineHeight: "normal",
     },
     h5: {
       fontSize: "25px",
+      lineHeight: "normal",
     },
     body1: {
       fontSize: "14px",
+      lineHeight: "normal",
     },
     body2: {
       fontSize: "12px",
+      lineHeight: "normal",
     },
     caption: {
       fontSize: "10px",
+      lineHeight: "normal",
     },
   },
   components: {
@@ -88,13 +97,13 @@ const theme = createTheme({
             color: theme.palette.common.white,
           },
         }),
-        text: {
-          background: "#ccffcc",
-          color: "#00ff00",
+        text: ({ theme }) => ({
+          background: theme.palette.primary.lightest,
+          color: theme.palette.primary.main,
           "&:hover": {
-            background: "#ccffcc",
+            background: theme.palette.primary.lightest,
           },
-        },
+        }),
       },
     },
     MuiFormLabel: {
