@@ -2,7 +2,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { Box, Button, Container, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import { usePathname } from "next/navigation";
 import { BiSolidCategory } from "react-icons/bi";
 import { IoIosArrowForward } from "react-icons/io";
 import { LuMenu, LuSearch } from "react-icons/lu";
@@ -10,9 +20,15 @@ import { MdPerson, MdShoppingCart } from "react-icons/md";
 
 import { navItems } from "./nav-data";
 import ResponsiveDrawer from "./resposive-drawer";
+import useGetScrollPosition from "@/hooks/useGetScrollPosition";
 
 function MainHeader() {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+
+  const { scrollPosition } = useGetScrollPosition();
+
+  const path = usePathname();
+  const theme = useTheme();
 
   const toggleDrawer = (newValue: boolean) => {
     setIsDrawerOpen(newValue);
@@ -25,7 +41,7 @@ function MainHeader() {
           <Box sx={styles.topSection}>
             <Box sx={{ display: { xs: "none", md: "block" } }}>
               <Link href="" style={{ display: "flex" }}>
-                <Image src="/images/logo.png" alt="Logo" width={98} height={44} />
+                <Image src="/logo-files/svg/logo.svg" alt="Logo" width={110} height={40} />
               </Link>
             </Box>
             <IconButton
@@ -60,25 +76,31 @@ function MainHeader() {
               </Box>
             </Box>
           </Box>
-          <Box sx={styles.bottomSection}>
-            <Button
-              variant="contained"
-              startIcon={<BiSolidCategory />}
-              endIcon={<IoIosArrowForward />}
-              sx={styles.buttonStyle}
-            >
-              Categories
-            </Button>
-            <Box sx={styles.navStyle}>
-              {navItems.map((item) => (
-                <Link style={{ textDecoration: "none", color: "inherit" }} href={item.link}>
-                  <Typography key={item.link} variant="body1" sx={styles.navItem}>
-                    {item.title}
-                  </Typography>
-                </Link>
-              ))}
+          {scrollPosition < 230 && (
+            <Box sx={styles.bottomSection}>
+              <Button
+                variant="contained"
+                startIcon={<BiSolidCategory />}
+                endIcon={<IoIosArrowForward />}
+                sx={styles.buttonStyle}
+              >
+                Categories
+              </Button>
+              <Box sx={styles.navStyle}>
+                {navItems.map((item) => (
+                  <Link style={{ textDecoration: "none", color: "inherit" }} href={item.link}>
+                    <Typography
+                      key={item.link}
+                      variant="body1"
+                      sx={{ ...styles.navItem(theme), ...(path === item.link && styles.activeItem(theme)) }}
+                    >
+                      {item.title}
+                    </Typography>
+                  </Link>
+                ))}
+              </Box>
             </Box>
-          </Box>
+          )}
         </Container>
       </Box>
 
@@ -92,7 +114,7 @@ export default MainHeader;
 const styles: any = {
   mainHeaderStyles: (theme: any) => ({
     background: theme.palette.common.white,
-    boxShadow: "rgba(43, 52, 69, 0.1) 0px 4px 16px",
+    boxShadow: "rgba(0, 0, 0, 0.04) 0px 2px 5px",
     padding: "10px 0",
   }),
   topSection: {
@@ -112,11 +134,11 @@ const styles: any = {
     alignItems: "center",
     cursor: "pointer",
     background: theme.palette.grey[100],
-    padding: "12px",
+    padding: "10px",
     borderRadius: "100%",
   }),
   bottomSection: {
-    mt: 1.5,
+    mt: 2,
     display: { xs: "none", md: "flex" },
     justifyContent: "space-between",
     alignItems: "center",
@@ -137,11 +159,15 @@ const styles: any = {
   },
   navItem: (theme: any) => ({
     color: theme.palette.grey[700],
-    fontSize: "16px",
+    fontSize: "14px",
     letterSpacing: "1px",
     transition: ".1s",
     "&:hover": {
       color: theme.palette.primary.main,
     },
+  }),
+  activeItem: (theme: any) => ({
+    color: theme.palette.primary.main,
+    fontWeight: 500,
   }),
 };

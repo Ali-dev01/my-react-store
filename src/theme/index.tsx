@@ -18,16 +18,16 @@ const theme = createTheme({
       white: "#fff",
     },
     primary: {
-      main: "#33ff33",
-      dark: "#00ff00",
-      light: "#66ff66",
-      lightest: "#ccffcc",
+      main: "#0c8060",
+      dark: "#0a7356",
+      light: "#3c997f",
+      lightest: "#b6d8cf",
     },
     secondary: {
-      main: "#ffff19",
-      dark: "#ffff00",
-      light: "#ffff66",
-      lightest: "#ffff99",
+      main: "#ebc707",
+      dark: "#d3b306",
+      light: "#f1d751",
+      lightest: "#f9eeb4",
     },
     grey: {
       "100": "#f7f7f5",
@@ -49,8 +49,19 @@ const theme = createTheme({
     fontWeightMedium: 600,
     fontWeightBold: 700,
     h1: {
-      color: "#2B3445",
-      fontSize: "50px",
+      fontSize: "65px",
+      lineHeight: "normal",
+    },
+    h2: {
+      fontSize: "55px",
+      lineHeight: "normal",
+    },
+    h3: {
+      fontSize: "45px",
+      lineHeight: "normal",
+    },
+    h4: {
+      fontSize: "35px",
       lineHeight: "normal",
     },
     h5: {
@@ -91,7 +102,7 @@ const theme = createTheme({
         outlined: ({ theme }) => ({
           transition: ".6s",
           background: "transparent",
-          border: "1px solid #33ff33",
+          border: `1px solid ${theme.palette.primary.main}`,
           "&:hover": {
             background: theme.palette.primary.main,
             color: theme.palette.common.white,

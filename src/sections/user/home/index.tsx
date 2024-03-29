@@ -1,127 +1,79 @@
 "use client";
+import { Box, Card, Container, Grid, Typography, useTheme } from "@mui/material";
+import { FaTruckFast } from "react-icons/fa6";
 
-import * as Yup from "yup";
-import { useForm } from "react-hook-form";
-import { Box, MenuItem, Slider } from "@mui/material";
+import Banner from "./banner-section";
+import Categories from "./categories-section";
+import FlashDeals from "./flash-deals-section";
+import NewArrivals from "./new-arrivals";
+import Discounted from "./discount-section";
+import { MdOutlinePayment, MdOutlineSecurity } from "react-icons/md";
+import { BiSupport } from "react-icons/bi";
 
-import RHFSelect from "@/components/RHF/rhf-select";
-import { yupResolver } from "@hookform/resolvers/yup";
-import CustomButton from "@/components/custom-button";
-import RHFCheckbox from "@/components/RHF/rhf-checkbox";
-import RHFTextField from "@/components/RHF/rhf-textField";
-import FormProvider from "@/components/RHF/form-provider";
-import RHFDatePicker from "@/components/RHF/rhf-date-picker";
-import RHFTimePicker from "@/components/RHF/rhf-time-picker";
-import RHFRadioGroup from "@/components/RHF/rhf-radio-group";
-import RHFMultiSelect from "@/components/RHF/rhf-multi-select";
-
-const options = [
-  { label: "Male", value: "male" },
-  { label: "Female", value: "female" },
-  { label: "Other", value: "other" },
-];
-const categories = [
-  { title: "Fashion", id: "1" },
-  { title: "Game", id: "2" },
-  { title: "Electronics", id: "3" },
-  { title: "Toys", id: "4" },
-  { title: "Mobiles", id: "5" },
-  { title: "Glasses", id: "6" },
+const cardsData = [
+  { title: "Worldwide Delivery", icon: FaTruckFast },
+  { title: "Safe Payment", icon: MdOutlinePayment },
+  { title: "Shop with Confidence", icon: MdOutlineSecurity },
+  { title: "24/7 Support", icon: BiSupport },
 ];
 
-function HomeSection() {
-  const methods = useForm({
-    defaultValues: {
-      password: "",
-      city: "",
-      textarea: "",
-      gender: "",
-      agree: false,
-      categories: [],
-      startDate: "",
-      startTime: "",
-    },
-    resolver: yupResolver(
-      Yup.object({
-        password: Yup.string().required("Required Field").min(8, "Minimum 8 characters required"),
-        city: Yup.string().required("Required Field"),
-        textarea: Yup.string().required("Required Field"),
-        gender: Yup.string().required("Required Field"),
-        categories: Yup.array().min(1, "Required Field").required("Required Field"),
-        startDate: Yup.string().required("Required Field"),
-        startTime: Yup.string().required("Required Field"),
-        agree: Yup.boolean().test("is-true", "Required Field", (value) => value === true),
-      })
-    ),
-  });
-  const { handleSubmit } = methods;
-
-  const handleForm = (values: any) => {
-    console.log(values);
-  };
-
+function HomeSection(): JSX.Element {
+  const theme = useTheme();
   return (
-    <Box p={2}>
-      <h5>Home</h5>
-      <br />
-      <FormProvider methods={methods} onSubmit={handleSubmit(handleForm)}>
-        <RHFTextField
-          name="password"
-          type="password"
-          variant="outlined"
-          fullWidth={false}
-          outerLabel="Password"
-          placeholder="Password"
-        />
-        <br />
-        <RHFSelect name="city" fullWidth={false} outerLabel="City">
-          <MenuItem value="lahore">Lahore</MenuItem>
-          <MenuItem value="gujranwala">Gujranwala</MenuItem>
-          <MenuItem value="faisalabad">Faisalabad</MenuItem>
-        </RHFSelect>
-        <br />
-        <RHFTextField
-          name="textarea"
-          fullWidth={false}
-          multiline={true}
-          outerLabel="Message"
-          variant="outlined"
-          placeholder="Write something..."
-        />
-        <br />
-        <RHFCheckbox name="agree" label="Are you agree" disabled={false} />
-        <br />
-        <br />
-        <RHFRadioGroup name="gender" outerLabel="Gender" options={options} />
-        <br />
-        <RHFMultiSelect
-          name="categories"
-          fullWidth
-          variant="outlined"
-          outerLabel="Categories"
-          placeholder="Categories"
-          options={categories}
-        />
-        <br />
-        <RHFDatePicker name="startDate" outerLabel="Start Date" fullWidth={false} />
-        <br />
-        <RHFTimePicker name="startTime" outerLabel="Start Time" fullWidth={false} readOnly={false} />
-        <br />
-        <CustomButton variant="contained" type="submit">
-          Submit
-        </CustomButton>
-        <br />
-        <br />
-        <CustomButton variant="outlined">Outlined</CustomButton>
-        <br />
-        <br />
-        <CustomButton variant="text">Text Button</CustomButton>
-      </FormProvider>
-      <Box width={300} my={2}>
-        <Slider className="_slider" defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
+    <>
+      <Box sx={{ background: "#fff", py: "10px" }}>
+        <Banner />
       </Box>
-    </Box>
+      <Box mt={10}>
+        <Categories />
+      </Box>
+      <Box mt={10} px={1.2}>
+        <FlashDeals />
+      </Box>
+      <Box mt={8}>
+        <NewArrivals />
+      </Box>
+      <Box mt={10} px={1.2}>
+        <Discounted />
+      </Box>
+      <Container maxWidth="xl" sx={{ mt: 10, pb: 4 }}>
+        <Grid container spacing={3}>
+          {cardsData.map((card) => (
+            <Grid key={card.title} item lg={3} md={6} sm={6} xs={12}>
+              <Card sx={styles.cardStyle}>
+                <Box sx={styles.iconStyle}>
+                  <card.icon size={26} color={theme.palette.secondary.main} />
+                </Box>
+                <Typography variant="body1" color="grey.900" mt={2} fontSize="18px">
+                  {card.title}
+                </Typography>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </>
   );
 }
 
 export default HomeSection;
+
+const styles = {
+  cardStyle: {
+    padding: "50px 30px",
+    borderRadius: "8px",
+    boxShadow: "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  iconStyle: (theme: any) => ({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    background: theme.palette.secondary.lightest,
+    padding: "18px",
+    borderRadius: "100%",
+  }),
+};

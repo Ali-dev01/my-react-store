@@ -1,10 +1,10 @@
+import { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { ThemeProvider } from "@mui/material";
 
-import "../../app/globals.css";
 import theme from "@/theme";
-import { ReactNode } from "react";
+import "../../app/globals.css";
 import Header from "@/components/layout/header";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
@@ -26,7 +26,7 @@ export default function UserLayout({ children }: Readonly<PropsTypes>) {
           <header>
             <Header />
           </header>
-          {children}
+          <main style={{ minHeight: "100vh", background: "#f5f5f5" }}>{children}</main>
           <footer>Footer</footer>
         </body>
       </ThemeProvider>
