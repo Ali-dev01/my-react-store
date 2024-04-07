@@ -1,14 +1,14 @@
 "use client";
 import { Box, Card, Container, Grid, Typography, useTheme } from "@mui/material";
+import { BiSupport } from "react-icons/bi";
 import { FaTruckFast } from "react-icons/fa6";
+import { MdOutlinePayment, MdOutlineSecurity } from "react-icons/md";
 
 import Banner from "./banner-section";
 import Categories from "./categories-section";
 import FlashDeals from "./flash-deals-section";
 import NewArrivals from "./new-arrivals";
 import Discounted from "./discount-section";
-import { MdOutlinePayment, MdOutlineSecurity } from "react-icons/md";
-import { BiSupport } from "react-icons/bi";
 
 const cardsData = [
   { title: "Worldwide Delivery", icon: FaTruckFast },
